@@ -1,0 +1,38 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Frontend (Next.js)",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run dev",
+      "cwd": "${workspaceFolder}/packages/frontend"
+    },
+    {
+      "name": "Backend (FastAPI)",
+      "type": "python",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": ["app.main:app", "--reload"],
+      "cwd": "${workspaceFolder}/packages/backend",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/packages/backend"
+      }
+    },
+    {
+      "name": "Hardhat Tests",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/packages/contracts",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "test"],
+      "console": "integratedTerminal"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Full Stack",
+      "configurations": ["Frontend (Next.js)", "Backend (FastAPI)"]
+    }
+  ]
+}

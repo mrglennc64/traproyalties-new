@@ -1,0 +1,16 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "juanblanco.solidity",
+    "NomicFoundation.hardhat-solidity",
+    "eamodio.gitlens",
+    "github.vscode-pull-request-github",
+    "ms-azuretools.vscode-docker",
+    "graphql.vscode-graphql",
+    "firsttris.vscode-jest-runner"
+  ]
+}
