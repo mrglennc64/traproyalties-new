@@ -26,7 +26,8 @@ import {
   Menu,
   Bell,
   Mail,
-  Loader2
+  Loader2,
+  Waves
 } from 'lucide-react';
 
 interface Contributor {
@@ -50,6 +51,7 @@ export default function VerificationPage() {
   const [paymentInputVisible, setPaymentInputVisible] = useState(false);
   const [paymentSectionVisible, setPaymentSectionVisible] = useState(false);
   const [step2ButtonsVisible, setStep2ButtonsVisible] = useState(false);
+  const [step4ButtonsVisible, setStep4ButtonsVisible] = useState(false);
   const [errorPanelVisible, setErrorPanelVisible] = useState(false);
   
   const TAX_RATE = 0.25; // 25% Swedish tax withholding
@@ -273,7 +275,7 @@ export default function VerificationPage() {
         <nav className="flex justify-between items-center pb-5 mb-5 border-b border-gray-200 flex-wrap gap-5">
           <Link href="/label" className="flex items-center gap-2 cursor-pointer">
             <div className="w-9 h-9 bg-purple-600 rounded-lg flex items-center justify-center text-white font-semibold text-xl">
-              S
+              <Waves className="h-5 w-5" />
             </div>
             <span className="text-2xl font-semibold text-gray-900">SMPT</span>
           </Link>

@@ -163,7 +163,7 @@ export default function UnifiedLandingPage() {
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                 <Link
-                  href="/audit"
+                  href="/free-audit"
                   className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-medium hover:shadow-lg transition-all transform hover:scale-105 text-center"
                 >
                   Start Free Audit
@@ -290,7 +290,7 @@ export default function UnifiedLandingPage() {
                 <p className="text-gray-600">Upload your tracks and get a free gap analysis report</p>
               </div>
               <Link
-                href="/audit"
+                href="/free-audit"
                 className="px-8 py-4 bg-purple-600 text-white rounded-xl font-medium hover:bg-purple-700 flex items-center space-x-2"
               >
                 <Upload className="h-5 w-5" />

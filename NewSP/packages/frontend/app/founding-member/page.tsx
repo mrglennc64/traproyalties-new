@@ -660,8 +660,15 @@ export default function FoundingMemberPage() {
   );
 }
 
-// Helper Components
-function BenefitItem({ icon: Icon, title, description }: any) {
+// ==================== Helper Components ====================
+
+interface BenefitItemProps {
+  icon: React.ElementType;
+  title: string;
+  description: string;
+}
+
+function BenefitItem({ icon: Icon, title, description }: BenefitItemProps) {
   return (
     <li className="flex space-x-3">
       <div className="flex-shrink-0 mt-1">
@@ -675,12 +682,22 @@ function BenefitItem({ icon: Icon, title, description }: any) {
   );
 }
 
-function AuditIssueRow({ track, artist, issue, impact, severity }: any) {
-  const severityColor = {
+interface AuditIssueRowProps {
+  track: string;
+  artist: string;
+  issue: string;
+  impact: string;
+  severity: 'high' | 'medium' | 'low';
+}
+
+function AuditIssueRow({ track, artist, issue, impact, severity }: AuditIssueRowProps) {
+  const severityColors: Record<string, string> = {
     high: 'bg-red-100 text-red-700',
     medium: 'bg-yellow-100 text-yellow-700',
     low: 'bg-blue-100 text-blue-700'
-  }[severity] || 'bg-gray-100 text-gray-700';
+  };
+
+  const severityColor = severityColors[severity] || 'bg-gray-100 text-gray-700';
 
   return (
     <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -701,7 +718,12 @@ function AuditIssueRow({ track, artist, issue, impact, severity }: any) {
   );
 }
 
-function FAQItem({ question, answer }: any) {
+interface FAQItemProps {
+  question: string;
+  answer: string;
+}
+
+function FAQItem({ question, answer }: FAQItemProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
