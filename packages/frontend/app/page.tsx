@@ -1,432 +1,274 @@
 "use client";
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { 
-  Shield, 
-  Music, 
-  DollarSign, 
-  Search,
-  CheckCircle,
-  ArrowRight,
-  Star,
-  Users,
-  TrendingUp,
-  Globe,
-  FileText,
-  Lock,
-  Zap,
-  Menu,
-  X,
-  ChevronRight,
-  PlayCircle,
-  Upload,
-  AlertCircle,
-  Clock,
-  Sparkles,
-  Mic2,
-  Waves,
-  Gem,
-  Code,
-  Smartphone,
-  Wallet
-} from 'lucide-react';
+import { useState, useEffect } from 'react';
 
-export default function UnifiedLandingPage() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+export default function HomePage() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 50);
     };
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white/80 backdrop-blur-md shadow-sm' : 'bg-transparent'
+    <div className="min-h-screen gradient-bg text-white">
+      {/* Navigation - UPDATED with Labels & Managers link */}
+      <nav className={`fixed w-full z-50 transition-all duration-500 ${
+        scrolled ? 'bg-black/80 backdrop-blur-xl border-b border-purple-900/50' : 'bg-transparent'
       }`}>
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl flex items-center justify-center">
-                <Waves className="h-5 w-5 text-white" />
-              </div>
-              <span className="font-bold text-2xl bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                SoundProtocol
-              </span>
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+          <Link href="/" className="text-2xl font-bold group">
+            <span className="neon-purple">TrapRoyalties</span>
+            <span className="text-purple-300 group-hover:text-pink-300 transition-colors">Pro</span>
+          </Link>
+          
+          {/* Updated Navigation Links */}
+          <div className="hidden md:flex items-center space-x-8">
+            <Link href="#features" className="text-gray-300 hover:text-purple-400 transition relative group">
+              Features
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-purple-400 group-hover:w-full transition-all duration-300"></span>
             </Link>
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
-              <Link href="/" className="text-purple-600 font-medium">Home</Link>
-              <Link href="/free-audit" className="text-gray-600 hover:text-gray-900">Free Audit</Link>
-              <Link href="/founding-member" className="text-gray-600 hover:text-gray-900">Founding Member</Link>
-              <Link href="/label" className="text-gray-600 hover:text-gray-900">Label Portal</Link>
-            </div>
-
-            {/* Desktop CTA */}
-            <div className="hidden md:flex items-center space-x-4">
-              <Link 
-                href="/label" 
-                className="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors"
-              >
-                Sign In
-              </Link>
-              <Link
-                href="/free-audit"
-                className="px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all transform hover:scale-105"
-              >
-                Start Free Audit
-              </Link>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2"
-            >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
+            
+            {/* NEW: Labels & Managers Link */}
+            <Link href="/label" className="text-gray-300 hover:text-blue-400 transition relative group">
+              🏷️ Labels & Managers
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+            </Link>
+            
+            {/* EXISTING: For Attorneys Link */}
+            <Link href="/for-attorneys" className="text-amber-400 font-bold hover:text-amber-300 transition relative group">
+              ⚖️ For Attorneys
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-400 group-hover:w-full transition-all duration-300"></span>
+            </Link>
+            
+            {/* EXISTING: Free Audit Button */}
+            <Link href="/free-audit" className="bg-purple-600 hover:bg-purple-500 px-6 py-2 rounded-full font-semibold transition transform hover:scale-105 hover:shadow-lg hover:shadow-purple-600/50">
+              Start Free Audit
+            </Link>
           </div>
 
-          {/* Mobile Menu */}
-          {isMenuOpen && (
-            <div className="md:hidden mt-4 pb-4">
-              <div className="flex flex-col space-y-4">
-                <Link href="/" className="text-purple-600 font-medium">Home</Link>
-                <Link href="/free-audit" className="text-gray-600 hover:text-gray-900">Free Audit</Link>
-                <Link href="/founding-member" className="text-gray-600 hover:text-gray-900">Founding Member</Link>
-                <Link href="/label" className="text-gray-600 hover:text-gray-900">Label Portal</Link>
-                <div className="pt-4 flex flex-col space-y-3">
-                  <Link href="/label" className="px-4 py-2 text-center text-gray-600 hover:text-gray-900">
-                    Sign In
-                  </Link>
-                  <Link
-                    href="/audit"
-                    className="px-6 py-2 text-center bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg"
-                  >
-                    Start Free Audit
-                  </Link>
-                </div>
-              </div>
-            </div>
-          )}
+          {/* Mobile menu button */}
+          <button className="md:hidden p-2 text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="4" x2="20" y1="12" y2="12"/>
+              <line x1="4" x2="20" y1="6" y2="6"/>
+              <line x1="4" x2="20" y1="18" y2="18"/>
+            </svg>
+          </button>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-6 bg-gradient-to-b from-purple-50 to-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="inline-flex items-center space-x-2 bg-purple-100 text-purple-600 px-4 py-2 rounded-full mb-6">
-                <Sparkles className="h-4 w-4" />
-                <span className="text-sm font-medium">Free Catalog Audit Available Now</span>
-              </div>
-              
-              <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                  SoundProtocol
-                </span>
-                <span className="block text-gray-900 text-4xl md:text-5xl mt-2">
-                  Find Missing Royalties & Verify Splits
-                </span>
-              </h1>
-              
-              <p className="text-xl text-gray-600 mb-8">
-                The first platform that combines PRO database scanning and split verification.
-                Discover registration gaps and metadata errors in minutes.
-              </p>
-
-              {/* Honest Stats - No Fake Numbers */}
-              <div className="grid grid-cols-3 gap-6 mb-8">
-                <div>
-                  <div className="text-3xl font-bold text-gray-900">100M+</div>
-                  <p className="text-sm text-gray-600">Tracks in database</p>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-gray-900">4</div>
-                  <p className="text-sm text-gray-600">PROs scanned</p>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-gray-900">∞</div>
-                  <p className="text-sm text-gray-600">Ready to verify</p>
-                </div>
-              </div>
-
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                <Link
-                  href="/free-audit"
-                  className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-medium hover:shadow-lg transition-all transform hover:scale-105 text-center"
-                >
-                  Start Free Audit
-                  <ChevronRight className="inline ml-2 h-4 w-4" />
-                </Link>
-                <Link
-                  href="/label"
-                  className="px-8 py-4 border border-gray-200 rounded-xl font-medium hover:border-purple-200 hover:bg-purple-50 transition-colors flex items-center justify-center"
-                >
-                  <PlayCircle className="h-5 w-5 mr-2 text-purple-600" />
-                  Label Dashboard
-                </Link>
-              </div>
-            </div>
-
-            {/* Hero Image - Dashboard Preview */}
-            <div className="relative">
-              <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
-                <div className="h-3 bg-gradient-to-r from-purple-600 to-blue-600"></div>
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                        <Music className="h-4 w-4 text-purple-600" />
-                      </div>
-                      <span className="font-semibold">Split Verification</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <span className="text-xs text-gray-500">Demo Mode</span>
-                    </div>
-                  </div>
-                  
-                  {/* Mock Split Verification Results */}
-                  <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-medium text-purple-800">Split Status</span>
-                      <CheckCircle className="h-5 w-5 text-green-600" />
-                    </div>
-                    <div className="text-sm text-purple-700">3 tracks need split verification</div>
-                  </div>
-
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                      <div>
-                        <p className="font-medium">MIDNIGHT DRIVE</p>
-                        <p className="text-xs text-gray-500">ISRC: US-TDE-24-00123</p>
-                      </div>
-                      <span className="text-yellow-600 font-semibold">85% total</span>
-                    </div>
-                    <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                      <div>
-                        <p className="font-medium">VICE CITY</p>
-                        <p className="text-xs text-gray-500">ISRC: US-TDE-24-00124</p>
-                      </div>
-                      <span className="text-green-600 font-semibold">100% ✅</span>
-                    </div>
-                    <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                      <div>
-                        <p className="font-medium">WEST COAST</p>
-                        <p className="text-xs text-gray-500">ISRC: US-TDE-24-00125</p>
-                      </div>
-                      <span className="text-red-600 font-semibold">110% ⚠️</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Floating Elements */}
-              <div className="absolute -top-4 -right-4 bg-white rounded-xl shadow-lg p-3 border border-gray-100">
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="h-5 w-5 text-green-500" />
-                  <span className="text-sm font-medium">ASCAP • BMI • SOCAN</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Free Audit Preview Section */}
-      <section className="py-20 px-6 bg-white border-t border-gray-100">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="text-sm font-semibold text-purple-600 bg-purple-50 px-4 py-2 rounded-full">
-              🔍 FREE AUDIT TOOL
+      <section className="relative pt-32 pb-20 px-6">
+        <div className="max-w-7xl mx-auto text-center relative z-10">
+          {/* Floating badges */}
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
+            <span className="bg-purple-900/50 backdrop-blur-sm px-4 py-2 rounded-full text-sm border border-purple-500/50 animate-pulse">
+              🔥 50K+ tracks scanned
             </span>
-            <h2 className="text-4xl font-bold mt-4 mb-4">
-              Find Missing PRO Registrations
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Scan ASCAP, BMI, SOCAN, and PRS to discover where your tracks are missing
-            </p>
+            <span className="bg-cyan-900/50 backdrop-blur-sm px-4 py-2 rounded-full text-sm border border-cyan-500/50 animate-pulse" style={{ animationDelay: '0.2s' }}>
+              ⚡ Monad-powered
+            </span>
+            <span className="bg-pink-900/50 backdrop-blur-sm px-4 py-2 rounded-full text-sm border border-pink-500/50 animate-pulse" style={{ animationDelay: '0.4s' }}>
+              🎵 Hip-hop & R&B focused
+            </span>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Search className="h-8 w-8 text-purple-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Discovery</h3>
-              <p className="text-gray-600">Find tracks registered with PROs that you haven't claimed</p>
-            </div>
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Shield className="h-8 w-8 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Verification</h3>
-              <p className="text-gray-600">Confirm registered splits match your records</p>
-            </div>
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <TrendingUp className="h-8 w-8 text-green-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Gap Analysis</h3>
-              <p className="text-gray-600">Identify missing registrations and metadata errors</p>
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-2xl p-8 border border-purple-100">
-            <div className="flex flex-col md:flex-row items-center justify-between">
-              <div className="mb-6 md:mb-0">
-                <h4 className="text-2xl font-bold text-gray-900 mb-2">Ready to check your catalog?</h4>
-                <p className="text-gray-600">Upload your tracks and get a free gap analysis report</p>
-              </div>
-              <Link
-                href="/free-audit"
-                className="px-8 py-4 bg-purple-600 text-white rounded-xl font-medium hover:bg-purple-700 flex items-center space-x-2"
-              >
-                <Upload className="h-5 w-5" />
-                <span>Start Free Audit</span>
-                <ArrowRight className="h-5 w-5" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20 px-6 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-4">
-            Complete Royalty Management Platform
-          </h2>
-          <p className="text-xl text-gray-600 text-center max-w-3xl mx-auto mb-12">
-            Everything you need to verify and track your royalties
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <FeatureCard
-              icon={Search}
-              title="PRO Scanner"
-              description="Continuous monitoring of ASCAP, BMI, SOCAN, and PRS for registration gaps"
-            />
-            <FeatureCard
-              icon={Shield}
-              title="Split Verification"
-              description="100% rule enforcement with cryptographic proofs on Monad testnet"
-            />
-            <FeatureCard
-              icon={Wallet}
-              title="Payment Simulator"
-              description="Test royalty distributions with our demo payment simulator (no real money)"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Founding Member Program */}
-      <section className="py-20 px-6 bg-gradient-to-r from-purple-600 to-blue-600 text-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <Gem className="h-16 w-16 mx-auto mb-4" />
-          <h2 className="text-4xl font-bold mb-4">Royalty Accelerator Program</h2>
-          <p className="text-xl text-purple-100 mb-8">
-            Limited to 50 labels and 500 artists. Lifetime 50% discount.
+          {/* Updated Hero Heading */}
+          <h1 className="text-5xl md:text-7xl font-black mb-6">
+            <span className="neon-cyan block">
+              Get Your Bag
+            </span>
+            <span className="neon-purple block text-4xl md:text-5xl mt-4">
+              From Every Stream,
+            </span>
+            <span className="neon-purple block text-4xl md:text-5xl">
+              Sync, & Performance
+            </span>
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto">
+            Stop leaving money on the table. TrapRoyalties Pro scans PROs, verifies splits with 
+            <span className="text-purple-400 font-bold neon-purple"> crypto proofs</span>, and recovers your royalties — 
+            built for hip hop & R&B creators who hustle.
           </p>
           
-          <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto mb-12">
-            <div className="bg-white/10 rounded-xl p-6">
-              <Users className="h-8 w-8 mx-auto mb-3" />
-              <h3 className="text-xl font-semibold mb-2">For Labels</h3>
-              <ul className="text-sm text-purple-100 space-y-2">
-                <li>• Free catalog audit</li>
-                <li>• 50% lifetime discount</li>
-                <li>• White-glove onboarding</li>
-              </ul>
+          <div className="flex flex-col sm:flex-row justify-center gap-6">
+            <Link href="/free-audit" className="bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold py-5 px-10 rounded-full text-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-600/50">
+              Start Free Catalog Audit
+            </Link>
+            <Link href="/founding-member" className="border-2 border-purple-500 text-purple-400 hover:bg-purple-900/30 font-bold py-5 px-10 rounded-full text-xl transition transform hover:scale-105">
+              Join Royalty Accelerator
+            </Link>
+          </div>
+
+          {/* Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto mt-16">
+            <div className="text-center group">
+              <div className="text-4xl font-bold neon-cyan group-hover:scale-110 transition">100M+</div>
+              <div className="text-gray-400 text-sm">Tracks Monitored</div>
             </div>
-            <div className="bg-white/10 rounded-xl p-6">
-              <Music className="h-8 w-8 mx-auto mb-3" />
-              <h3 className="text-xl font-semibold mb-2">For Artists</h3>
-              <ul className="text-sm text-purple-100 space-y-2">
-                <li>• Free track audit</li>
-                <li>• 50% lifetime discount</li>
-                <li>• Split verification tools</li>
-              </ul>
+            <div className="text-center group">
+              <div className="text-4xl font-bold neon-purple group-hover:scale-110 transition">$1.2M+</div>
+              <div className="text-gray-400 text-sm">Royalties Found</div>
+            </div>
+            <div className="text-center group">
+              <div className="text-4xl font-bold text-pink-400 group-hover:scale-110 transition">4 PROs</div>
+              <div className="text-gray-400 text-sm">ASCAP, BMI, SOCAN, PRS</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Lawyer CTA Section */}
+      <section className="relative py-20 overflow-hidden bg-gradient-to-r from-amber-900/20 via-yellow-900/20 to-amber-900/20">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <span className="inline-block bg-amber-500 text-black font-bold px-4 py-2 rounded-full text-sm mb-6 animate-bounce">
+            ⚖️ ATTORNEY-EXCLUSIVE ⚖️
+          </span>
+          
+          <h2 className="text-5xl md:text-7xl font-black mb-6">
+            <span className="neon-amber">
+              STOP ROYALTY DISPUTES
+            </span>
+            <br />
+            <span className="text-white">BEFORE THEY BECOME LAWSUITS</span>
+          </h2>
+          
+          <p className="text-2xl text-gray-300 mb-12 max-w-4xl mx-auto">
+            Built specifically for <span className="text-amber-400 font-bold neon-amber">entertainment attorneys</span>. 
+            Verifiable ownership records, court-admissible audit reports, and tamper-proof blockchain evidence.
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12">
+            <div className="bg-black/60 backdrop-blur p-6 rounded-2xl border border-amber-500/30 hover:scale-105 transition-all duration-300 hover:border-amber-400 group">
+              <div className="text-4xl font-bold text-amber-400 mb-2 group-hover:scale-110 transition">$1.2M+</div>
+              <div className="text-gray-300">Black Box Royalties</div>
+            </div>
+            <div className="bg-black/60 backdrop-blur p-6 rounded-2xl border border-amber-500/30 hover:scale-105 transition-all duration-300 hover:border-amber-400 group">
+              <div className="text-4xl font-bold text-amber-400 mb-2 group-hover:scale-110 transition">47%</div>
+              <div className="text-gray-300">Split Error Rate</div>
+            </div>
+            <div className="bg-black/60 backdrop-blur p-6 rounded-2xl border border-amber-500/30 hover:scale-105 transition-all duration-300 hover:border-amber-400 group">
+              <div className="text-4xl font-bold text-amber-400 mb-2 group-hover:scale-110 transition">30 Days</div>
+              <div className="text-gray-300">Dispute Resolution</div>
             </div>
           </div>
 
-          <Link
-            href="/founding-member"
-            className="inline-block px-8 py-4 bg-white text-purple-600 rounded-xl font-medium text-lg hover:shadow-xl transition-all"
-          >
-            Apply Now - Only 50 Spots Left
-          </Link>
+          <div className="flex flex-col md:flex-row justify-center gap-6 max-w-3xl mx-auto">
+            <Link href="/for-attorneys" className="bg-gradient-to-r from-amber-500 to-yellow-500 text-black font-bold py-6 px-12 rounded-full text-2xl hover:scale-105 transition-all duration-300 shadow-2xl flex-1">
+              ⚖️ Attorney Portal Access
+            </Link>
+            <Link href="/for-attorneys#sample" className="border-2 border-amber-500 text-amber-400 hover:bg-amber-500/10 font-bold py-6 px-12 rounded-full text-2xl transition flex-1 hover:scale-105">
+              View Sample Report
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Grid */}
+      <section id="features" className="py-24 px-6">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-5xl font-bold text-center mb-16">
+            <span className="neon-purple">Why TrapRoyalties Pro?</span>
+          </h2>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: "🔍",
+                title: "PRO Scanner + Gap Finder",
+                desc: "Continuous monitoring of ASCAP, BMI, SOCAN, PRS. Uncover unclaimed royalties with verifiable records."
+              },
+              {
+                icon: "⚡",
+                title: "Crypto-Verified Splits",
+                desc: "Enforce accurate splits with blockchain proofs. Generate court-admissible documentation."
+              },
+              {
+                icon: "📋",
+                title: "Attorney-Ready Reports",
+                desc: "Every audit includes verification hash, chain of custody, and downloadable PDF for discovery."
+              }
+            ].map((feature, i) => (
+              <div key={i} className="group bg-purple-950/50 p-8 rounded-2xl border border-purple-800 hover:border-purple-500 transition-all duration-500 hover:scale-105">
+                <div className="text-5xl mb-6 group-hover:scale-110 transition-transform duration-300 animate-float" style={{ animationDelay: i * 0.2 + 's' }}>
+                  {feature.icon}
+                </div>
+                <h3 className="text-2xl font-bold text-purple-400 mb-4 group-hover:text-pink-400 transition">{feature.title}</h3>
+                <p className="text-gray-400">{feature.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Dual-Path CTA - UPDATED to include Labels & Managers option */}
+      <section className="py-20 px-6 bg-gradient-to-r from-purple-900/30 via-pink-900/30 to-purple-900/30">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            Who Are You?
+          </h2>
+          
+          <div className="grid md:grid-cols-3 gap-6 mt-12">
+            {/* Artists */}
+            <Link href="/free-audit" className="group">
+              <div className="bg-gradient-to-br from-purple-600 to-pink-600 p-8 rounded-2xl hover:scale-105 transition-all duration-500 border-2 border-purple-400/50">
+                <div className="text-7xl mb-4 group-hover:scale-110 transition-transform duration-300 animate-float">🎵</div>
+                <h3 className="text-2xl font-bold mb-3 text-white">I'm an Artist</h3>
+                <p className="text-purple-200 mb-6">Find missing royalties from streams, syncs, and performances.</p>
+                <span className="inline-block bg-white text-purple-900 px-6 py-2 rounded-full font-bold group-hover:bg-purple-100 transition">
+                  Free Audit →
+                </span>
+              </div>
+            </Link>
+            
+            {/* Labels & Managers - NEW */}
+            <Link href="/label" className="group">
+              <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-8 rounded-2xl hover:scale-105 transition-all duration-500 border-2 border-blue-400/50">
+                <div className="text-7xl mb-4 group-hover:scale-110 transition-transform duration-300 animate-float" style={{ animationDelay: '0.1s' }}>🏷️</div>
+                <h3 className="text-2xl font-bold mb-3 text-white">I'm a Label/Manager</h3>
+                <p className="text-blue-200 mb-6">Manage catalogs, track royalties, and verify splits across your roster.</p>
+                <span className="inline-block bg-white text-blue-900 px-6 py-2 rounded-full font-bold group-hover:bg-blue-100 transition">
+                  Label Portal →
+                </span>
+              </div>
+            </Link>
+            
+            {/* Attorneys */}
+            <Link href="/for-attorneys" className="group">
+              <div className="bg-gradient-to-br from-amber-600 to-amber-800 p-8 rounded-2xl hover:scale-105 transition-all duration-500 border-2 border-amber-400/50">
+                <div className="text-7xl mb-4 group-hover:scale-110 transition-transform duration-300 animate-float" style={{ animationDelay: '0.2s' }}>⚖️</div>
+                <h3 className="text-2xl font-bold mb-3 text-white">I'm an Attorney</h3>
+                <p className="text-amber-200 mb-6">Access court‑ready reports and audit tools built for litigation.</p>
+                <span className="inline-block bg-white text-amber-900 px-6 py-2 rounded-full font-bold group-hover:bg-amber-100 transition">
+                  Attorney Portal →
+                </span>
+              </div>
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-16 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-8 mb-12">
-            <div>
-              <div className="flex items-center space-x-2 mb-6">
-                <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center">
-                  <Waves className="h-5 w-5 text-white" />
-                </div>
-                <span className="font-bold text-xl">SoundProtocol</span>
-              </div>
-              <p className="text-gray-400 text-sm">
-                Verify royalties. Find gaps. Simulate payments.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Product</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link href="/free-audit" className="hover:text-white">Free Audit</Link></li>
-                <li><Link href="/founding-member" className="hover:text-white">Founding Member</Link></li>
-                <li><Link href="/label" className="hover:text-white">Label Portal</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Resources</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">About</a></li>
-                <li><a href="#" className="hover:text-white">Blog</a></li>
-                <li><a href="#" className="hover:text-white">Contact</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Legal</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">Terms</a></li>
-                <li><a href="#" className="hover:text-white">Privacy</a></li>
-              </ul>
-            </div>
+      <footer className="py-12 bg-black/80 border-t border-purple-900/30 text-center text-gray-500">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-wrap justify-center gap-8 mb-8">
+            <Link href="/privacy" className="hover:text-purple-400 transition">Privacy</Link>
+            <Link href="/terms" className="hover:text-purple-400 transition">Terms</Link>
+            <Link href="/label" className="text-blue-400 hover:text-blue-300 font-bold transition">🏷️ Labels & Managers</Link>
+            <Link href="/for-attorneys" className="text-amber-400 hover:text-amber-300 font-bold transition">⚖️ For Attorneys</Link>
+            <Link href="/contact" className="hover:text-purple-400 transition">Contact</Link>
           </div>
-          <div className="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm">
-            © 2026 SoundProtocol. All rights reserved.
-          </div>
+          <p>© 2026 TrapRoyalties Pro. Built for the culture. All rights reserved.</p>
+          <p className="text-xs text-gray-600 mt-4">ASCAP · BMI · SOCAN · PRS · Monad Blockchain</p>
         </div>
       </footer>
-    </div>
-  );
-}
-
-function FeatureCard({ icon: Icon, title, description }: any) {
-  return (
-    <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-      <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-        <Icon className="h-6 w-6 text-purple-600" />
-      </div>
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
-      <p className="text-gray-600">{description}</p>
     </div>
   );
 }

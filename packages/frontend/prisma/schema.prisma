@@ -6,7 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -43,61 +44,23 @@ model Track {
   iswc            String?
   title           String
   artist          String
+  artists         String[]
+  producers       String[]
+  writers         String[]
   label           String?
   releaseDate     DateTime?
-  userId          String
-  user            User            @relation(fields: [userId], references: [id])
-  accountId       String?
-  account         Account?        @relation(fields: [accountId], references: [id])
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
-
-  // Relations for arrays
-  artists         TrackArtist[]
-  producers       TrackProducer[]
-  writers         TrackWriter[]
   platforms       PlatformLink[]
   registrations   Registration[]
   earnings        Earning[]
   missingFlags    MissingFlag[]
   verifications   Verification[]
   shareLinks      ShareLink[]
-}
-
-model TrackArtist {
-  id        String   @id @default(cuid())
-  trackId   String
-  track     Track    @relation(fields: [trackId], references: [id])
-  name      String
-  order     Int?     @default(0)
-  createdAt DateTime @default(now())
-
-  @@unique([trackId, name])
-  @@index([trackId])
-}
-
-model TrackProducer {
-  id        String   @id @default(cuid())
-  trackId   String
-  track     Track    @relation(fields: [trackId], references: [id])
-  name      String
-  order     Int?     @default(0)
-  createdAt DateTime @default(now())
-
-  @@unique([trackId, name])
-  @@index([trackId])
-}
-
-model TrackWriter {
-  id        String   @id @default(cuid())
-  trackId   String
-  track     Track    @relation(fields: [trackId], references: [id])
-  name      String
-  order     Int?     @default(0)
-  createdAt DateTime @default(now())
-
-  @@unique([trackId, name])
-  @@index([trackId])
+  userId          String
+  user            User            @relation(fields: [userId], references: [id])
+  accountId       String?
+  account         Account?        @relation(fields: [accountId], references: [id])
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 }
 
 model PlatformLink {
@@ -183,24 +146,6 @@ model Lead {
   user         User?    @relation(fields: [userId], references: [id])
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-}
-
-model UnclaimedRoyalty {
-  id          String   @id @default(cuid())
-  trackTitle  String
-  artistName  String?
-  writerName  String?
-  isrc        String?
-  source      String
-  amount      Float
-  confidence  String
-  claimed     Boolean  @default(false)
-  claimedBy   String?
-  createdAt   DateTime @default(now())
-  
-  @@index([artistName])
-  @@index([writerName])
-  @@index([isrc])
 }
 
 enum UserRole {

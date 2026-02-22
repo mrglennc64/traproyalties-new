@@ -1,0 +1,41 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "C:\\Users\\Gamle\\NewSP\\packages\\blockchain\\contracts\\TrapRoyaltiesESeal.sol": {
+      "lastModificationDate": 1771794327817,
+      "contentHash": "41330e08c67b95909ba570a5fc91512d",
+      "sourceName": "contracts/TrapRoyaltiesESeal.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "TrapRoyaltiesPro_ESeal"
+      ]
+    }
+  }
+}

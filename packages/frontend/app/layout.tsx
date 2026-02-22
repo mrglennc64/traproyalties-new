@@ -1,20 +1,21 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Orbitron } from 'next/font/google'
 import './globals.css'
-import '@rainbow-me/rainbowkit/styles.css'
-import Providers from './providers'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ 
+  subsets: ['latin'],
+  variable: '--font-inter',
+})
+
+const orbitron = Orbitron({ 
+  subsets: ['latin'],
+  variable: '--font-orbitron',
+  weight: ['400', '600', '700'],
+})
 
 export const metadata: Metadata = {
-  title: 'SoundProtocol - The Protocol That Makes Music Transparent',
-  description: 'Stop losing money to registration errors and split mismatches. SoundProtocol automatically finds missing royalties and settles them on-chain in seconds.',
-  keywords: 'royalties, music, blockchain, monad, payments, splits, mogul, collab chain',
-  openGraph: {
-    title: 'SoundProtocol',
-    description: 'Find missing royalties and settle instantly on Monad',
-    type: 'website',
-  },
+  title: 'TrapRoyalties Pro',
+  description: 'Get Your Bag From Every Stream, Sync & Performance',
 }
 
 export default function RootLayout({
@@ -23,10 +24,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Providers>{children}</Providers>
-      </body>
+    <html lang="en" className={`${inter.variable} ${orbitron.variable}`}>
+      <body className="font-sans antialiased">{children}</body>
     </html>
   )
 }

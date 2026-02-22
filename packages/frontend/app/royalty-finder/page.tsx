@@ -1,162 +1,164 @@
 "use client";
 
 import { useState } from 'react';
-import { 
-  Search, 
-  Music, 
-  User, 
-  Loader2, 
-  Mail, 
-  CheckCircle, 
-  AlertCircle,
-  DollarSign,
-  TrendingUp,
-  Globe,
-  ArrowRight
-} from 'lucide-react';
 import Link from 'next/link';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
-interface Artist {
-  uuid: string;
+interface SearchResult {
+  id: string;
   name: string;
-  image?: string;
-  followers?: number;
-}
-
-interface RoyaltyEstimate {
-  trackUuid: string;
-  trackName: string;
-  artistName: string;
-  totalStreams: number;
-  estimatedRoyalty: number;
+  role: string;
+  matchCount: number;
   confidence: 'high' | 'medium' | 'low';
-  platforms?: Record<string, number>;
 }
 
-// Mock data for artists
-const mockArtists: Record<string, Artist[]> = {
-  'kendrick': [
-    { uuid: 'artist-123', name: 'Kendrick Lamar', image: '', followers: 15000000 }
-  ],
-  'jay': [
-    { uuid: 'artist-456', name: 'Jay Rock', image: '', followers: 2000000 }
-  ],
-  'schoolboy': [
-    { uuid: 'artist-789', name: 'Schoolboy Q', image: '', followers: 3500000 }
-  ],
-  'sza': [
-    { uuid: 'artist-101', name: 'SZA', image: '', followers: 8500000 }
-  ]
-};
-
-// Mock tracks by artist
-const mockTracks: Record<string, any[]> = {
-  'artist-123': [
-    { uuid: 'track-1', title: 'HUMBLE.', isrc: 'USUM71703861' },
-    { uuid: 'track-2', title: 'DNA.', isrc: 'USUM71703862' },
-    { uuid: 'track-3', title: 'LOYALTY.', isrc: 'USUM71703863' }
-  ],
-  'artist-456': [
-    { uuid: 'track-4', title: 'MIDNIGHT DRIVE', isrc: 'US-TDE-24-00123' },
-    { uuid: 'track-5', title: 'VICE CITY', isrc: 'US-TDE-24-00124' }
-  ],
-  'artist-789': [
-    { uuid: 'track-6', title: 'WEST COAST', isrc: 'US-TDE-24-00125' },
-    { uuid: 'track-7', title: 'BLOW FOR BLOW', isrc: 'US-TDE-24-00126' }
-  ],
-  'artist-101': [
-    { uuid: 'track-8', title: 'KILL BILL', isrc: 'USRC12300001' },
-    { uuid: 'track-9', title: 'SNOOZE', isrc: 'USRC12300002' }
-  ]
-};
+interface TrackResult {
+  id: string;
+  title: string;
+  artist: string;
+  isrc?: string;
+  estimatedAmount: number;
+  confidence: 'high' | 'medium' | 'low';
+  source: string;
+  platform?: string;
+}
 
 export default function RoyaltyFinderPage() {
   const [searchType, setSearchType] = useState<'artist' | 'writer'>('artist');
-  const [query, setQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [searching, setSearching] = useState(false);
-  const [artists, setArtists] = useState<Artist[]>([]);
-  const [selectedArtist, setSelectedArtist] = useState<Artist | null>(null);
-  const [scanning, setScanning] = useState(false);
-  const [results, setResults] = useState<RoyaltyEstimate[]>([]);
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [selectedResult, setSelectedResult] = useState<SearchResult | null>(null);
+  const [trackResults, setTrackResults] = useState<TrackResult[]>([]);
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [email, setEmail] = useState('');
   const [emailSent, setEmailSent] = useState(false);
 
-  const handleSearch = () => {
-    if (!query.trim() || query.length < 2) return;
+  const handleSearch = async () => {
+    if (!searchQuery.trim()) return;
     
     setSearching(true);
-    setArtists([]);
+    setSearchResults([]);
     
-    // Simulate API search
+    // Simulate API call
     setTimeout(() => {
-      const searchResults: Artist[] = [];
-      const lowerQuery = query.toLowerCase();
+      // Mock results based on search query
+      const mockResults: SearchResult[] = [];
       
-      if (lowerQuery.includes('kendrick')) {
-        searchResults.push(...(mockArtists['kendrick'] || []));
-      }
-      if (lowerQuery.includes('jay') || lowerQuery.includes('rock')) {
-        searchResults.push(...(mockArtists['jay'] || []));
-      }
-      if (lowerQuery.includes('schoolboy') || lowerQuery.includes('q')) {
-        searchResults.push(...(mockArtists['schoolboy'] || []));
-      }
-      if (lowerQuery.includes('sza')) {
-        searchResults.push(...(mockArtists['sza'] || []));
+      if (searchQuery.toLowerCase().includes('metro') || searchQuery.toLowerCase().includes('boomin')) {
+        mockResults.push({
+          id: 'metro-1',
+          name: 'Metro Boomin',
+          role: 'Producer',
+          matchCount: 847,
+          confidence: 'high'
+        });
       }
       
-      setArtists(searchResults);
+      if (searchQuery.toLowerCase().includes('future')) {
+        mockResults.push({
+          id: 'future-1',
+          name: 'Future',
+          role: 'Artist',
+          matchCount: 1234,
+          confidence: 'high'
+        });
+      }
+      
+      if (searchQuery.toLowerCase().includes('sza')) {
+        mockResults.push({
+          id: 'sza-1',
+          name: 'SZA',
+          role: 'Artist',
+          matchCount: 892,
+          confidence: 'high'
+        });
+      }
+      
+      if (searchQuery.toLowerCase().includes('weeknd')) {
+        mockResults.push({
+          id: 'weeknd-1',
+          name: 'The Weeknd',
+          role: 'Artist',
+          matchCount: 2103,
+          confidence: 'high'
+        });
+      }
+      
+      // If no specific matches, show generic
+      if (mockResults.length === 0) {
+        mockResults.push({
+          id: 'generic-1',
+          name: searchQuery,
+          role: searchType === 'artist' ? 'Artist' : 'Writer',
+          matchCount: 0,
+          confidence: 'low'
+        });
+      }
+      
+      setSearchResults(mockResults);
       setSearching(false);
-    }, 800);
-  };
-
-  const handleSelectArtist = (artist: Artist) => {
-    setSelectedArtist(artist);
-    setScanning(true);
-    setArtists([]);
-    setQuery(artist.name);
-    
-    // Simulate scanning catalog
-    setTimeout(() => {
-      const tracks = mockTracks[artist.uuid] || [
-        { uuid: 'default-1', title: 'Popular Track 1' },
-        { uuid: 'default-2', title: 'Popular Track 2' },
-        { uuid: 'default-3', title: 'Popular Track 3' }
-      ];
-      
-      const estimates: RoyaltyEstimate[] = tracks.map((track, index) => {
-        const baseStreams = Math.floor(Math.random() * 5000000) + 1000000;
-        const rate = 0.0035;
-        
-        let confidence: 'high' | 'medium' | 'low' = 'medium';
-        if (baseStreams > 3000000) confidence = 'high';
-        else if (baseStreams < 2000000) confidence = 'low';
-        
-        return {
-          trackUuid: track.uuid,
-          trackName: track.title,
-          artistName: artist.name,
-          totalStreams: baseStreams,
-          estimatedRoyalty: Math.round(baseStreams * rate * 100) / 100,
-          confidence,
-          platforms: {
-            spotify: Math.floor(baseStreams * 0.6),
-            apple_music: Math.floor(baseStreams * 0.25),
-            youtube: Math.floor(baseStreams * 0.1),
-            tidal: Math.floor(baseStreams * 0.03),
-            deezer: Math.floor(baseStreams * 0.02)
-          }
-        };
-      });
-      
-      setResults(estimates);
-      setScanning(false);
-      setShowEmailModal(true);
     }, 1500);
   };
 
-  const handleSendEmail = () => {
+  const handleSelectResult = (result: SearchResult) => {
+    setSelectedResult(result);
+    setSearching(true);
+    
+    // Simulate fetching track results
+    setTimeout(() => {
+      const mockTracks: TrackResult[] = [
+        {
+          id: 'track-1',
+          title: 'DRIP TOO HARD',
+          artist: result.name,
+          isrc: 'US-XYZ-25-00123',
+          estimatedAmount: 3450,
+          confidence: 'high',
+          source: 'ASCAP',
+          platform: 'Streaming'
+        },
+        {
+          id: 'track-2',
+          title: 'STREET RUNNER',
+          artist: result.name,
+          isrc: 'US-XYZ-25-00124',
+          estimatedAmount: 2800,
+          confidence: 'medium',
+          source: 'BMI',
+          platform: 'Sync Licensing'
+        },
+        {
+          id: 'track-3',
+          title: 'LATE NIGHT VIBES',
+          artist: result.name,
+          isrc: 'US-XYZ-25-00125',
+          estimatedAmount: 4200,
+          confidence: 'high',
+          source: 'SOCAN',
+          platform: 'Performance Royalties'
+        },
+        {
+          id: 'track-4',
+          title: 'MIDNIGHT DRIVE',
+          artist: result.name,
+          estimatedAmount: 1900,
+          confidence: 'low',
+          source: 'PRS',
+          platform: 'Mechanical'
+        }
+      ];
+      
+      setTrackResults(mockTracks);
+      setSearching(false);
+      setShowEmailModal(true);
+    }, 2000);
+  };
+
+  const handleEmailSubmit = async () => {
+    if (!email.includes('@')) return;
+    
     setEmailSent(true);
     setTimeout(() => {
       setShowEmailModal(false);
@@ -174,236 +176,254 @@ export default function RoyaltyFinderPage() {
     }).format(amount);
   };
 
-  const formatNumber = (num: number) => {
-    return new Intl.NumberFormat('en-US').format(num);
-  };
-
-  const totalMissing = results.reduce((sum, r) => sum + r.estimatedRoyalty, 0);
+  const totalEstimated = trackResults.reduce((sum, track) => sum + track.estimatedAmount, 0);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Navigation */}
-      <nav className="border-b border-gray-200 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Link href="/" className="font-bold text-2xl text-purple-600">
-                SoundProtocol
-              </Link>
-            </div>
-            <div className="hidden md:flex items-center space-x-8">
-              <Link href="/" className="text-gray-600 hover:text-gray-900">Home</Link>
-              <Link href="/label" className="text-gray-600 hover:text-gray-900">Label Portal</Link>
-              <Link href="/royalty-finder" className="text-purple-600 font-medium">Royalty Finder</Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 py-12">
-        {/* Header */}
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Find Missing <span className="text-purple-600">Royalties</span>
-          </h1>
-          <p className="text-xl text-gray-600">
-            Search our database of 100M+ tracks to discover unclaimed earnings
+    <div className="min-h-screen gradient-bg">
+      <Header />
+      
+      <main className="pt-28 pb-20 px-6 max-w-5xl mx-auto">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-6xl font-bold neon-cyan mb-4">Find Missing Royalties</h1>
+          <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto">
+            Hunt down unclaimed bags from streams, syncs, performances & playlists. Scan major PROs (ASCAP, BMI, SOCAN, PRS) for gaps — especially in hip hop collabs, features, & R&B hooks.
           </p>
+          <p className="mt-4 text-lg text-purple-300 font-medium">Free basic search • Real-time estimates • Upgrade for full recovery & on-chain proof</p>
         </div>
 
-        {/* Search Card */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
-          {/* Tabs */}
-          <div className="flex space-x-4 mb-8">
-            <button
+        <div className="bg-gray-900/60 backdrop-blur-md rounded-3xl shadow-2xl border border-purple-900/50 p-8 md:p-12">
+          {/* Search Type Toggle */}
+          <div className="flex space-x-4 mb-10">
+            <button 
               onClick={() => setSearchType('artist')}
-              className={`flex-1 py-4 rounded-xl font-medium flex items-center justify-center space-x-2 transition-all ${
-                searchType === 'artist'
-                  ? 'bg-purple-600 text-white shadow-lg shadow-purple-200'
-                  : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+              className={`flex-1 py-5 rounded-2xl font-semibold flex items-center justify-center space-x-3 transition-all ${
+                searchType === 'artist' 
+                  ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-900/40 transform hover:scale-105' 
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
               }`}
             >
-              <Music className="h-5 w-5" />
-              <span>Search by Artist</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+              </svg>
+              <span>Search by Artist / Group</span>
             </button>
-            <button
+            <button 
               onClick={() => setSearchType('writer')}
-              className={`flex-1 py-4 rounded-xl font-medium flex items-center justify-center space-x-2 transition-all ${
-                searchType === 'writer'
-                  ? 'bg-purple-600 text-white shadow-lg shadow-purple-200'
-                  : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+              className={`flex-1 py-5 rounded-2xl font-semibold flex items-center justify-center space-x-3 transition-all ${
+                searchType === 'writer' 
+                  ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg shadow-cyan-900/40 transform hover:scale-105' 
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
               }`}
             >
-              <User className="h-5 w-5" />
-              <span>Search by Writer</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+              </svg>
+              <span>Search by Writer / Producer</span>
             </button>
           </div>
 
-          {/* Search Input */}
-          <div className="relative mb-6">
-            <Search className="absolute left-4 top-4 h-6 w-6 text-gray-400" />
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
+          {/* Search Form */}
+          <div className="relative mb-8">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#a855f7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-5 top-1/2 transform -translate-y-1/2 h-8 w-8 text-purple-400">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+            </svg>
+            <input 
+              type="text" 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-              placeholder={searchType === 'artist' 
-                ? "Enter artist name (e.g., Kendrick Lamar, Jay Rock)"
-                : "Enter writer name (e.g., John Doe)"
-              }
-              className="w-full pl-14 pr-4 py-4 text-lg border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              placeholder={`Enter ${searchType} name (e.g., Future, Metro Boomin, SZA, The Weeknd)`} 
+              className="w-full pl-16 pr-6 py-6 text-xl bg-gray-800 border-2 border-purple-900/50 rounded-2xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-600 text-white placeholder-gray-400"
+              disabled={searching}
             />
           </div>
 
-          {/* Search Button */}
-          <button
+          <button 
             onClick={handleSearch}
-            disabled={!query.trim() || searching}
-            className="w-full py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-medium text-lg hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+            disabled={!searchQuery.trim() || searching}
+            className="w-full py-6 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full font-bold text-2xl hover:from-purple-500 hover:to-pink-500 shadow-2xl shadow-purple-900/50 transition transform hover:scale-105 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {searching ? (
-              <span className="flex items-center justify-center">
-                <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                Searching...
-              </span>
-            ) : (
-              <span className="flex items-center justify-center">
-                <Search className="h-5 w-5 mr-2" />
-                Search Royalties
-              </span>
-            )}
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-4">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+            </svg>
+            {searching ? 'Searching...' : 'Search for Missing Royalties'}
           </button>
 
-          {/* Artist Results */}
-          {artists.length > 0 && !selectedArtist && (
-            <div className="mt-8 border-t border-gray-100 pt-8">
-              <h3 className="text-lg font-semibold mb-4">Select an artist:</h3>
-              <div className="space-y-3">
-                {artists.map((artist) => (
-                  <button
-                    key={artist.uuid}
-                    onClick={() => handleSelectArtist(artist)}
-                    className="w-full p-4 bg-gray-50 hover:bg-gray-100 rounded-xl flex items-center space-x-4 transition-colors"
-                  >
-                    <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                      <Music className="h-6 w-6 text-purple-600" />
+          {/* Search Results */}
+          {searchResults.length > 0 && !selectedResult && (
+            <div className="mt-8 space-y-4">
+              <h3 className="text-2xl font-bold neon-purple mb-4">Select a Match</h3>
+              {searchResults.map((result) => (
+                <button
+                  key={result.id}
+                  onClick={() => handleSelectResult(result)}
+                  className="w-full p-6 bg-gray-800/50 hover:bg-gray-800 rounded-2xl border border-purple-900/50 flex items-center justify-between transition group"
+                >
+                  <div className="flex items-center space-x-4">
+                    <div className="w-16 h-16 bg-purple-900/50 rounded-full flex items-center justify-center">
+                      <span className="text-2xl font-bold text-purple-300">
+                        {result.name.charAt(0)}
+                      </span>
                     </div>
-                    <div className="flex-1 text-left">
-                      <p className="font-semibold text-gray-900">{artist.name}</p>
-                      {artist.followers && (
-                        <p className="text-sm text-gray-500">
-                          {formatNumber(artist.followers)} followers
-                        </p>
-                      )}
+                    <div className="text-left">
+                      <h4 className="text-xl font-bold text-white">{result.name}</h4>
+                      <p className="text-purple-300">{result.role}</p>
                     </div>
-                    <ArrowRight className="h-5 w-5 text-purple-600" />
-                  </button>
-                ))}
-              </div>
+                  </div>
+                  <div className="text-right">
+                    <span className={`px-4 py-2 rounded-full text-sm font-bold ${
+                      result.confidence === 'high' ? 'bg-green-600/30 text-green-400' :
+                      result.confidence === 'medium' ? 'bg-yellow-600/30 text-yellow-400' :
+                      'bg-gray-600/30 text-gray-400'
+                    }`}>
+                      {result.confidence.toUpperCase()} CONFIDENCE
+                    </span>
+                    {result.matchCount > 0 && (
+                      <p className="text-gray-400 mt-2">{result.matchCount} potential matches</p>
+                    )}
+                  </div>
+                </button>
+              ))}
             </div>
           )}
 
-          {/* Scanning State */}
-          {scanning && (
+          {/* Loading State */}
+          {searching && searchResults.length === 0 && (
             <div className="mt-8 text-center py-12">
-              <Loader2 className="h-16 w-16 animate-spin text-purple-600 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Scanning Royalty Databases</h3>
-              <p className="text-gray-500">Checking {selectedArtist?.name}'s catalog across all platforms...</p>
+              <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-purple-600 mx-auto mb-6"></div>
+              <p className="text-xl text-purple-300">Scanning PRO databases...</p>
+              <p className="text-gray-400 mt-2">Checking ASCAP, BMI, SOCAN, PRS</p>
             </div>
           )}
+
+          <p className="text-center mt-6 text-gray-400 text-lg">
+            Free basic search (limited results) • Full catalog scan + detailed recovery in{' '}
+            <Link href="/free-audit" className="text-purple-400 hover:text-purple-300 underline">
+              Free Audit
+            </Link>
+          </p>
         </div>
 
-        {/* Features */}
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="text-center">
-            <Globe className="h-8 w-8 text-purple-600 mx-auto mb-3" />
-            <h3 className="font-semibold mb-2">Global Coverage</h3>
-            <p className="text-sm text-gray-500">100M+ tracks across all major platforms</p>
+        {/* Features / Benefits */}
+        <div className="mt-20 grid md:grid-cols-3 gap-10">
+          <div className="text-center bg-gray-900/40 rounded-2xl p-8 border border-purple-800/30">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#a855f7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mx-auto mb-6">
+              <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/>
+            </svg>
+            <h3 className="text-2xl font-bold neon-purple mb-4">Global PRO Coverage</h3>
+            <p className="text-gray-300">Scans ASCAP, BMI, SOCAN, PRS & more — find unclaimed from viral TikToks to radio spins.</p>
           </div>
-          <div className="text-center">
-            <TrendingUp className="h-8 w-8 text-purple-600 mx-auto mb-3" />
-            <h3 className="font-semibold mb-2">Real-Time Data</h3>
-            <p className="text-sm text-gray-500">Powered by Soundcharts API</p>
+          <div className="text-center bg-gray-900/40 rounded-2xl p-8 border border-purple-800/30">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mx-auto mb-6">
+              <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>
+            </svg>
+            <h3 className="text-2xl font-bold neon-cyan mb-4">Real-Time Estimates</h3>
+            <p className="text-gray-300">Instant insights on potential missing earnings — see where your streams/synchs fell through cracks.</p>
           </div>
-          <div className="text-center">
-            <DollarSign className="h-8 w-8 text-purple-600 mx-auto mb-3" />
-            <h3 className="font-semibold mb-2">Instant Estimates</h3>
-            <p className="text-sm text-gray-500">Get royalty estimates in seconds</p>
+          <div className="text-center bg-gray-900/40 rounded-2xl p-8 border border-purple-800/30">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#a855f7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mx-auto mb-6">
+              <line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+            <h3 className="text-2xl font-bold neon-purple mb-4">Claim Your Bag</h3>
+            <p className="text-gray-300">Link to recovery tools — upgrade for crypto-verified claims & payment simulation.</p>
           </div>
         </div>
-      </div>
+
+        {/* Upsell CTA */}
+        <div className="mt-16 text-center">
+          <h2 className="text-4xl font-bold neon-cyan mb-6">Ready to Recover What's Yours?</h2>
+          <p className="text-xl text-gray-300 mb-8">Basic search shows gaps — full power (unlimited, monitoring, on-chain proof) in Royalty Accelerator.</p>
+          <Link 
+            href="/founding-member" 
+            className="inline-block bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-bold py-6 px-12 rounded-full text-2xl shadow-2xl shadow-pink-900/50 transition transform hover:scale-105"
+          >
+            Join Accelerator – Limited Spots
+          </Link>
+        </div>
+      </main>
 
       {/* Email Capture Modal */}
       {showEmailModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+          <div className="bg-gray-900 rounded-3xl border-2 border-purple-500 p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             {!emailSent ? (
               <>
-                <h3 className="text-2xl font-bold mb-2">
-                  We found <span className="text-purple-600">{formatCurrency(totalMissing)}</span>
+                <h3 className="text-3xl font-bold neon-cyan mb-4">
+                  We Found <span className="text-green-400">{formatCurrency(totalEstimated)}</span> in Potential Royalties!
                 </h3>
-                <p className="text-gray-600 mb-6">
-                  Enter your email to see the detailed breakdown for {selectedArtist?.name}
-                </p>
-
+                
                 {/* Results Preview */}
-                <div className="bg-gray-50 rounded-xl p-4 mb-6 max-h-80 overflow-y-auto">
-                  {results.map((result, index) => (
-                    <div key={index} className="flex items-center justify-between py-3 border-b border-gray-200 last:border-0">
-                      <div>
-                        <p className="font-medium">{result.trackName}</p>
-                        <p className="text-sm text-gray-500">
-                          {result.confidence === 'high' && '✓ High confidence'}
-                          {result.confidence === 'medium' && '⚠️ Medium confidence'}
-                          {result.confidence === 'low' && '❓ Low confidence'}
-                        </p>
+                <div className="space-y-4 mb-6 max-h-80 overflow-y-auto">
+                  {trackResults.map((track, index) => (
+                    <div key={index} className="bg-gray-800/50 p-4 rounded-xl border border-purple-800/30">
+                      <div className="flex justify-between items-start mb-2">
+                        <div>
+                          <h4 className="text-xl font-bold text-white">{track.title}</h4>
+                          <p className="text-purple-300">{track.artist}</p>
+                        </div>
+                        <span className={`px-3 py-1 rounded-full text-xs font-bold ${
+                          track.confidence === 'high' ? 'bg-green-600/30 text-green-400' :
+                          track.confidence === 'medium' ? 'bg-yellow-600/30 text-yellow-400' :
+                          'bg-gray-600/30 text-gray-400'
+                        }`}>
+                          {track.confidence.toUpperCase()}
+                        </span>
                       </div>
-                      <div className="text-right">
-                        <p className="font-semibold text-green-600">{formatCurrency(result.estimatedRoyalty)}</p>
-                        <p className="text-xs text-gray-400">{formatNumber(result.totalStreams)} streams</p>
+                      <div className="grid grid-cols-2 gap-4 text-sm mt-2">
+                        <div>
+                          <p className="text-gray-400">Source</p>
+                          <p className="text-white">{track.source}</p>
+                        </div>
+                        <div>
+                          <p className="text-gray-400">Platform</p>
+                          <p className="text-white">{track.platform}</p>
+                        </div>
                       </div>
+                      <p className="text-2xl font-bold text-green-400 mt-3 text-right">
+                        {formatCurrency(track.estimatedAmount)}
+                      </p>
                     </div>
                   ))}
                 </div>
 
+                {/* Email Input */}
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Your email address"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 mb-4"
+                  placeholder="Enter your email to see full results"
+                  className="w-full px-6 py-4 mb-4 bg-gray-800 border-2 border-purple-900/50 rounded-2xl focus:outline-none focus:border-purple-500 text-white text-lg"
                 />
 
                 <button
-                  onClick={handleSendEmail}
+                  onClick={handleEmailSubmit}
                   disabled={!email.includes('@')}
-                  className="w-full py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed mb-3"
+                  className="w-full py-5 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full font-bold text-xl hover:from-purple-500 hover:to-pink-500 transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Send My Results
                 </button>
 
-                <button 
-                  onClick={() => setShowEmailModal(false)}
-                  className="w-full text-sm text-gray-500 hover:text-gray-700"
-                >
-                  No thanks, I'll check later
-                </button>
+                <p className="text-center text-gray-400 mt-4">
+                  We'll never spam you. Unsubscribe anytime.
+                </p>
               </>
             ) : (
               <div className="text-center py-8">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle className="h-8 w-8 text-green-600" />
+                <div className="w-20 h-20 bg-green-600/30 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <svg className="text-green-400" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>
+                  </svg>
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Check Your Inbox!</h3>
-                <p className="text-gray-600">
-                  We've sent the royalty report to {email}
-                </p>
+                <h3 className="text-3xl font-bold text-green-400 mb-4">Check Your Inbox!</h3>
+                <p className="text-xl text-gray-300">We've sent your royalty report to</p>
+                <p className="text-xl text-purple-400 font-bold mt-2">{email}</p>
               </div>
             )}
           </div>
         </div>
       )}
+
+      <Footer />
     </div>
   );
 }

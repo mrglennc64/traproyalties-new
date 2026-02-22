@@ -1,0 +1,18 @@
+Your public key has been saved in /root/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:KjUX6tsSMo1a32EXviApA+64eGZUxJClxDVzsphcFvo root@srv1406833
+The key's randomart image is:
++---[RSA 4096]----+
+| .o*X..          |
+| ooBo*           |
+|  *..   .        |
+|  ...  . ..      |
+| . oEo+.S. .     |
+|  o Bo=++ o      |
+| + o.*o= + .     |
+|o *  .oo. .      |
+|o=    ...        |
++----[SHA256]-----+
+root@srv1406833:~#
+
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCrFvlieUmeABqx/2Q9aA0wLM00K7M7O7YKyMWsI6ygvBqcQhAHVPOgH7MvpEmpzShne2OTj2i07GMm6DQkuzQiwfbH2MWj/nrChJKd3ReKUgRvUTkujPySlXagBuoBt9dBDOmLjPDG3GJdLMz1sic/FVHWvzmI8Co4VR5bu8q29Rl8BeollPl17gcbA8BsMN5nk+NQ3aQh0tcVnkfuRUpasxGpJu/EnymnrSMnhtupGPrWrstLUpQ5gLCppfGiuSzGMZGVeZCyy1pNkUxWVceYeH2kOlz1dQkxPln7+MfoUW+p31mcIBI/b4l0ZQOIY/0DNKuE4CkI/JnDn05tZLkBGtVJYzDUy1oaizp8ihgunkdLUGZHc4862Z0gf7Kpq4LnBWazDYuBrSnJaDze+kLlU5ql6ytP87Rt66wDuAToFfMNo3blEMpDUT5FU8K0yKKRvhJ5DE7PrOGmoaXUyzlQuain+IPH9WXmZi90AnKSQ7MqyeRZBHPytwLsjfxsjIFxDvycIu8rW7Dc9rU7NKz/2n0ru5XTuQsbS1ZS5PRiMyQEWwxlfpvMU3fABAXwzBlolXoDfRR4bz8lFwzvrrR9ljtvJCF2/J4OcKCjZ32mFrNEo7CPbs5KH4lLKzluYT/SWjpvqlL3E9cza9YZRWATWI2yWfqZBdyk+wgmAO0SCw== root@srv1406833

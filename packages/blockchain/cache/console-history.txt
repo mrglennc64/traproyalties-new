@@ -1,0 +1,4 @@
+.exit
+console.log("Contract factory loaded successfully");
+console.log("Ethers version:", ethers.version);
+const { ethers } = require("hardhat");

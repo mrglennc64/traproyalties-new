@@ -1,24 +1,8 @@
-﻿import { PrismaClient } from '@prisma/client'
-import { PrismaLibSql } from '@prisma/adapter-libsql'
-import { createClient } from '@libsql/client'
+﻿// Minimal Prisma client export for Next.js API route
+// You may need to install @prisma/client and generate the client
 
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined
-}
+import { PrismaClient } from '@prisma/client';
 
-// Create libSQL client
-const libsql = createClient({
-  url: process.env.DATABASE_URL || "file:./dev.db",
-})
+const prisma = new PrismaClient();
 
-// Use 'as any' to bypass TypeScript type checking
-const adapter = new (PrismaLibSql as any)(libsql)
-
-// Use 'as any' for PrismaClient as well
-export const prisma = globalForPrisma.prisma ?? new (PrismaClient as any)({
-  adapter,
-})
-
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma as PrismaClient
-
-export default prisma
+export default prisma;
