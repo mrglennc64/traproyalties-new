@@ -23,6 +23,14 @@ export interface CatalogItem {
   status: 'open' | 'closed' | 'pending';
   createdAt: Date | string;
 }
+export interface LabelDashboard {
+  id: string;
+  labelName: string;
+  totalArtists: number;
+  totalCatalog: number;
+  totalStreams: number;
+  totalRevenue: number;
+}
 
 
 
