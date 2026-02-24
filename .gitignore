@@ -53,3 +53,4 @@ coverage/
 # Temporary
 tmp/
 temp/
+packages/backend/app/
