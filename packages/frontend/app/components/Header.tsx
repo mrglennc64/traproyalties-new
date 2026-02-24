@@ -1,22 +1,23 @@
-﻿'use client';
+﻿"use client";
 
-import Link from 'next/link';
+import React from "react";
 
-export default function Header() {
+interface HeaderProps {
+  title?: string;
+  subtitle?: string;
+}
+
+export default function Header({ title, subtitle }: HeaderProps) {
   return (
-    <header className="bg-black/90 text-white py-4 border-b border-purple-900/50">
-      <div className="container mx-auto px-6 flex justify-between items-center">
-        <Link href="/" className="text-2xl font-bold neon-purple">
-          TrapRoyalties Pro
-        </Link>
-        <nav className="space-x-6">
-          <Link href="#features" className="hover:text-purple-400 transition">
-            Features
-          </Link>
-          <Link href="/free-audit" className="bg-purple-600 hover:bg-purple-500 px-4 py-2 rounded-full text-sm font-semibold transition">
-            Start Free Audit
-          </Link>
-        </nav>
+    <header className="w-full py-6 bg-black/70 backdrop-blur-md border-b border-purple-900/30">
+      <div className="max-w-7xl mx-auto px-6">
+        <h1 className="text-3xl font-bold neon-purple">
+          {title || "TrapRoyalties Pro"}
+        </h1>
+
+        {subtitle && (
+          <p className="text-purple-300 mt-1 text-sm">{subtitle}</p>
+        )}
       </div>
     </header>
   );

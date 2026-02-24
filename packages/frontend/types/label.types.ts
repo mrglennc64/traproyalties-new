@@ -1,1 +1,2 @@
-export * from '../../shared/label.types';
+export * from '../shared/label.types';
+
