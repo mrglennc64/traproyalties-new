@@ -41,6 +41,13 @@ export interface RiskSummary {
   lastUpdated: Date | string;
   notes?: string;
 }
+export interface Settlement {
+  id: string;
+  period: string;            // e.g. "Q1 2025"
+  amount: number;            // settlement amount
+  status: 'paid' | 'pending' | 'overdue';
+  date: Date | string;       // settlement date
+}
 
 
 
