@@ -34,8 +34,10 @@ export interface LabelDashboard {
 }
 export interface RiskSummary {
   id: string;
-  riskLevel: 'low' | 'medium' | 'high';
-  issues: number;
+  highRiskItems: number;
+  mediumRiskItems: number;
+  lowRiskItems: number;
+  totalAtRisk: number;
   lastUpdated: Date | string;
   notes?: string;
 }
