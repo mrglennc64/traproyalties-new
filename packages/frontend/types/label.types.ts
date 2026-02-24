@@ -11,3 +11,12 @@ export interface Activity {
   timestamp: Date | string;
 }
 
+export interface CatalogItem {
+  id: string;
+  name: string;
+  description: string;
+  price?: number;
+  createdAt?: Date | string;
+}
+
+
