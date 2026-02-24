@@ -32,6 +32,13 @@ export interface LabelDashboard {
     monthlyRoyalties: number;
   };
 }
+export interface RiskSummary {
+  id: string;
+  riskLevel: 'low' | 'medium' | 'high';
+  issues: number;
+  lastUpdated: Date | string;
+  notes?: string;
+}
 
 
 
