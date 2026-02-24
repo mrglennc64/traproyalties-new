@@ -43,10 +43,10 @@ export interface RiskSummary {
 }
 export interface Settlement {
   id: string;
-  period: string;            // e.g. "Q1 2025"
-  amount: number;            // settlement amount
+  trackId: string;                 // required by component
+  amount: number;
   status: 'paid' | 'pending' | 'overdue';
-  date: Date | string;       // settlement date
+  date: Date | string;
 }
 
 
