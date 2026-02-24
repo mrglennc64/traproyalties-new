@@ -5,3 +5,10 @@ export interface Activity {
   timestamp: Date | string;
 }
 
+export interface Dispute {
+  id: string;
+  title: string;
+  message: string;
+  status: 'open' | 'closed' | 'pending';
+  createdAt: Date | string;
+}
