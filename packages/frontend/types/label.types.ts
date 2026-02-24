@@ -25,12 +25,14 @@ export interface CatalogItem {
 }
 export interface LabelDashboard {
   id: string;
-  labelName: string;
-  totalArtists: number;
-  totalCatalog: number;
-  totalStreams: number;
-  totalRevenue: number;
+  name: string; // matches dashboard.name in the component
+  metrics: {
+    totalCatalogValue: number;
+    currency: string;
+    monthlyRoyalties: number;
+  };
 }
+
 
 
 
