@@ -10,13 +10,12 @@ export interface Activity {
   description: string;
   timestamp: Date | string;
 }
-
 export interface CatalogItem {
   id: string;
-  name: string;
-  description: string;
-  price?: number;
-  createdAt?: Date | string;
+  title: string;
+  artist: string;
+  streams: number;
+  revenue: number;
 }
 
 
